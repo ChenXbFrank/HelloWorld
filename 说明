@@ -1,0 +1,47 @@
+创建第一个项目
+使用 django-admin 来创建 HelloWorld 项目：
+
+django-admin startproject HelloWorld
+
+接下来我们进入 HelloWorld 目录输入以下命令，启动服务器：
+python manage.py runserver 0.0.0.0:8000
+
+接下来我们需要向Django说明模板文件的路径，修改HelloWorld/settings.py，
+修改 TEMPLATES 中的 DIRS 为 [BASE_DIR+"/templates",]，
+
+安装mysql的驱动
+pip install mysqlclient
+
+
+我们在项目的 settings.py 文件中找到 DATABASES 配置项，将其信息修改为：
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
+        'NAME': 'test',
+        'USER': 'test',
+        'PASSWORD': 'test123',
+        'HOST':'localhost',
+        'PORT':'3306',
+    }
+}
+
+
+创建 APP
+Django规定，如果要使用模型，必须要创建一个app。
+我们使用以下命令创建一个 TestModel 的 app:
+django-admin startapp TestModel
+
+
+接下来在settings.py中找到INSTALLED_APPS这一项，如下：
+'TestModel',               # 添加此项
+
+
+在命令行中运行：
+
+$ python manage.py migrate   # 创建表结构
+
+$ python manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更
+$ python manage.py migrate TestModel   # 创建表结构
+看到几行 "Creating table…" 的字样，你的数据表就创建好了。
+
